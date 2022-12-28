@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:property name="base_length" value="0.510" />
+  <xacro:property name="base_width" value="0.318" />
+  <xacro:property name="base_height" value="0.180" />
+  <xacro:property name="base_mass" value="10" />
+
+  <xacro:property name="wheel_radius" value="0.0795" />
+  <xacro:property name="wheel_width" value="0.047" />
+  <xacro:property name="wheel_pos_x" value="0.1505" />
+  <xacro:property name="wheel_pos_y" value="0.1925" />
+  <xacro:property name="wheel_pos_z" value="-0.1105" />
+  <xacro:property name="wheel_mass" value=".6" />
+  <xacro:property name="wheel_torque" value="12" />
+
+  <xacro:property name="laser_pose">
+    <origin xyz="0.205 0 0.064" rpy="0 0 3.14"/>
+  </xacro:property>
+
+  <xacro:property name="depth_sensor_pose">
+    <origin xyz="-0.065 0 0.255" rpy="0 0 0"/>
+  </xacro:property>
+</robot>

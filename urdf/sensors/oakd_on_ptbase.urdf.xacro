@@ -1,0 +1,124 @@
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:property name="M_PI" value="3.1415926535897931" />
+  <xacro:macro name="depth_sensor" params="*origin">
+
+    <link name="oakd_center_camera">
+      <inertial>
+        <mass value="0.01" />
+        <origin xyz="0.055 0.30 0.0"/>
+        <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
+      </inertial>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <box size="0.025 0.110 0.015" />
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="oakd_left_camera">
+      <inertial>
+        <mass value="0.01" />
+        <origin xyz="0.055 0.30 0.0"/>
+        <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
+      </inertial>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <box size="0.025 0.110 0.015" />
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="oakd_right_camera">
+      <inertial>
+        <mass value="0.01" />
+        <origin xyz="0.055 0.30 0.0"/>
+        <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
+      </inertial>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <box size="0.025 0.110 0.015" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="cam_pan_joint" type="revolute">
+      <origin xyz="-0.030 0.0 0.535" rpy="0 0 0" />
+      <axis xyz="0 0 1"/>
+      <limit upper="1.57" lower="-1.57" effort="10" velocity="10"/>
+      <parent link="base_link" />
+      <child link="cam_pan_to_tilt_link" />
+    </joint>
+
+    <link name="cam_pan_to_tilt_link">
+    <inertial>
+      <mass value="0.01" />
+      <origin xyz="0 0 0" />
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
+    </inertial>
+    </link>
+
+    <joint name="cam_tilt_joint" type="revolute">
+      <origin xyz="0.0077 0.0 0.021" rpy="0 0 0" />
+      <axis xyz="0 1 0"/>
+      <limit upper="1.57" lower="-1.57" effort="10" velocity="10"/>
+      <parent link="cam_pan_to_tilt_link" />
+      <child link="cam_tilt_to_oakd_base_link" />
+    </joint>
+
+    <link name="cam_tilt_to_oakd_base_link">
+      <inertial>
+        <mass value="0.01" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
+      </inertial>
+    </link>
+
+    <joint name="oakd_base_joint" type="fixed">
+      <origin xyz="0.083 0 0.063" rpy="0 0 0" />
+      <parent link="cam_tilt_to_oakd_base_link" />
+      <child link="oakd_base_link" />
+    </joint>
+
+    <link name="oakd_base_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="${pi/2} 0 ${pi/2}"/>
+        <geometry>
+          <!-- box size="${length} ${width} ${height}"/ -->
+          <mesh filename="package://linorobot2_description/meshes/oakd.stl" scale="1.0 1.0 1.0"/> -->
+        </geometry>
+        <material name="black">
+          <color rgba="0.0 0.0 0.0 1.0"/>
+        </material>
+      </visual>
+
+      <inertial>
+        <mass value="0.01" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
+      </inertial>
+    </link>
+
+    <joint name="oakd_center_camera_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <parent link="oakd_base_link" />
+      <child link="oakd_center_camera" />
+    </joint>
+
+    <joint name="oakd_left_camera_joint" type="fixed">
+      <origin xyz="0 0.0375 0" rpy="0 0 0" />
+      <parent link="oakd_base_link" />
+      <child link="oakd_left_camera" />
+    </joint>
+
+    <joint name="oakd_right_camera_joint" type="fixed">
+      <origin xyz="0 -0.0375 0" rpy="0 0 0" />
+      <parent link="oakd_base_link" />
+      <child link="oakd_right_camera" />
+    </joint>
+
+  </xacro:macro>
+</robot>
+  
