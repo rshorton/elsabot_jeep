@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Name=Elsabot Jeep Bringup
+Type=Application
+Exec=gnome-terminal -e "bash -c '/home/elsabot/robot_ws/run_jeep.sh;$SHELL'" 
+#Exec=/home/elsabot/robot_ws/run.sh
+Terminal=false
+StartupNotify=true
+

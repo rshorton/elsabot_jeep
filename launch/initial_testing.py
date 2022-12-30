@@ -23,12 +23,24 @@ from launch.conditions import IfCondition
 
 def generate_launch_description():
 
+    joy_launch_path = PathJoinSubstitution(
+        [FindPackageShare('elsabot_jeep'), 'launch', 'joy_teleop.launch.py']
+    )
+
+
     return LaunchDescription([
         DeclareLaunchArgument(
             name='base_serial_port', 
-            default_value='/dev/ttyACM0',
-            description='Linorobot Base Serial Port'
+            default_value='/dev/teensy',
+            description='Jeep Base Serial Port'
         ),
+
+        DeclareLaunchArgument(
+            name='joy', 
+            default_value='false',
+            description='Use Joystick'
+        ),
+
         Node(
             package='micro_ros_agent',
             executable='micro_ros_agent',
@@ -36,4 +48,10 @@ def generate_launch_description():
             output='screen',
             arguments=['serial', '--dev', LaunchConfiguration("base_serial_port")]
         ),
+
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(joy_launch_path),
+            condition=IfCondition(LaunchConfiguration("joy")),
+        )
+
     ])
