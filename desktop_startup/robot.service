@@ -1,0 +1,9 @@
+[Unit]
+Description=My custom startup script
+
+[Service]
+User=ubuntu
+ExecStart=/home/ubuntu/jeep_ws/src/elsabot_jeep/desktop_startup/startup.sh start
+
+[Install]
+WantedBy=multi-user.target
