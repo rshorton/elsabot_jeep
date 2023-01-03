@@ -42,6 +42,12 @@ def generate_launch_description():
         ),
 
         Node(
+            package='system_shutdown',
+            executable='system_shutdown',
+            name='system_shutdown'
+        ),
+
+        Node(
             package='micro_ros_agent',
             executable='micro_ros_agent',
             name='micro_ros_agent',
