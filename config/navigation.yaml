@@ -125,6 +125,7 @@ controller_server:
       max_vel_theta: 1.0 # the angular velocity is also bounded by min_turning_radius in case of a carlike robot (r = v / omega)
       acc_lim_x: 2.5
       acc_lim_theta: 3.2
+      min_turning_radius: 1.5
 
       footprint_model: # types: "point", "circular", "two_circles", "line", "polygon"
         type: "polygon"
@@ -163,7 +164,7 @@ controller_server:
       weight_acc_lim_theta: 10.5
       weight_kinematics_nh: 1000.0
       weight_kinematics_forward_drive: 3.0
-      weight_kinematics_turning_radius: 2.0 # FIX, need to measure  orig: 1.0
+      weight_kinematics_turning_radius: 1.0
       weight_optimaltime: 1.0 # must be > 0
       weight_shortest_path: 0.0
       weight_obstacle: 100.0
