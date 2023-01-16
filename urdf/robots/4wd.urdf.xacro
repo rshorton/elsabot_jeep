@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
-<robot name="linorobot2_2wd" xmlns:xacro="http://ros.org/wiki/xacro">
+<robot name="elsabot_jeep" xmlns:xacro="http://ros.org/wiki/xacro">
 
-  <xacro:include filename="$(find linorobot2_description)/urdf/4wd_properties.urdf.xacro" />
-  <xacro:include filename="$(find linorobot2_description)/urdf/mech/base.urdf.xacro" />
-  <xacro:include filename="$(find linorobot2_description)/urdf/mech/wheel.urdf.xacro" />
-  <xacro:include filename="$(find linorobot2_description)/urdf/sensors/imu.urdf.xacro" />
-  <xacro:include filename="$(find linorobot2_description)/urdf/sensors/generic_laser.urdf.xacro" />
-  <!--xacro:include filename="$(find linorobot2_description)/urdf/sensors/depth_sensor.urdf.xacro" /-->
-  <xacro:include filename="$(find linorobot2_description)/urdf/sensors/oakd_on_ptbase.urdf.xacro" />
-  <xacro:include filename="$(find linorobot2_description)/urdf/controllers/skid_steer.urdf.xacro" />
+  <xacro:include filename="$(find elsabot_jeep)/urdf/4wd_properties.urdf.xacro" />
+  <xacro:include filename="$(find elsabot_jeep)/urdf/mech/base.urdf.xacro" />
+  <xacro:include filename="$(find elsabot_jeep)/urdf/mech/wheel.urdf.xacro" />
+  <xacro:include filename="$(find elsabot_jeep)/urdf/sensors/imu.urdf.xacro" />
+  <xacro:include filename="$(find elsabot_jeep)/urdf/sensors/generic_laser.urdf.xacro" />
+  <!--xacro:include filename="$(find elsabot_jeep)/urdf/sensors/depth_sensor.urdf.xacro" /-->
+  <xacro:include filename="$(find elsabot_jeep)/urdf/sensors/oakd_on_ptbase.urdf.xacro" />
+  <xacro:include filename="$(find elsabot_jeep)/urdf/controllers/skid_steer.urdf.xacro" />
 
   <xacro:base 
     length="${base_length}" 
