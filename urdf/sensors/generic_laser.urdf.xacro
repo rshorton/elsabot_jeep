@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
-  <xacro:include filename="$(find linorobot2_description)/urdf/sensors/laser.urdf.xacro" />
+  <xacro:include filename="$(find elsabot_jeep)/urdf/sensors/laser.urdf.xacro" />
 
   <xacro:macro name="generic_laser" params="*origin">
     <xacro:laser

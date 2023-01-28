@@ -1,0 +1,27 @@
+# The LIDAR is mounted on the front of the robot.
+# Filter out the scans toward the windshield of the robot
+# (behind the LIDAR).  Note, the LIDAR is mounted with a
+# 180 degree rotation.  As such, it requires two filters
+# to clear that portion of the scan.
+#
+# Front of robot
+#           3.14
+#  -1.57   LIDAR   1.57
+#            0
+#      < block this >
+# Back of robot
+
+scan_to_scan_filter_chain:
+  ros__parameters:
+    filter1:
+      name: angle_filter1
+      type: laser_filters/LaserScanAngularBoundsFilterInPlace
+      params:
+        lower_angle: -1.57
+        upper_angle: 0.0
+    filter2:
+      name: angle_filter2
+      type: laser_filters/LaserScanAngularBoundsFilterInPlace
+      params:
+        lower_angle: 0.0
+        upper_angle: 1.57

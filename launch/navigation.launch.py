@@ -24,6 +24,7 @@ from launch.conditions import IfCondition
 from launch_ros.substitutions import FindPackageShare
 from launch_ros.actions import Node
 
+MAP_NAME='office_for_jeep'
 MAP_NAME='upstairs'
 #MAP_NAME='office' #change to the name of your own map here
 #MAP_NAME='backyard' #change to the name of your own map here

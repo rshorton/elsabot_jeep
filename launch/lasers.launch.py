@@ -42,7 +42,6 @@ def generate_launch_description():
             package='rplidar_ros',
             executable='rplidar_composition',
             output='screen',
-            remappings=[('scan', LaunchConfiguration('topic_name'))],
             parameters=[{
                 'serial_port': '/dev/rplidar',
                 'serial_baudrate': 115200,  # A1 / A2
@@ -50,6 +49,18 @@ def generate_launch_description():
                 'inverted': False,
                 'angle_compensate': True,
             }],
+        ),
+
+        Node(
+            package='laser_filters',
+            executable='scan_to_scan_filter_chain',
+            output='screen',
+            parameters=[
+                PathJoinSubstitution(
+                    [FindPackageShare('elsabot_jeep'), 'config', 'lidar_scan_range_filter.yaml']
+                )
+            ]
         )
     ])
+
 
