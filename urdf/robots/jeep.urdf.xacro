@@ -8,6 +8,7 @@
   <xacro:include filename="$(find elsabot_jeep)/urdf/sensors/generic_laser.urdf.xacro" />
   <!--xacro:include filename="$(find elsabot_jeep)/urdf/sensors/depth_sensor.urdf.xacro" /-->
   <xacro:include filename="$(find elsabot_jeep)/urdf/sensors/oakd_on_ptbase.urdf.xacro" />
+  <xacro:include filename="$(find elsabot_jeep)/urdf/sensors/hcsr04.urdf.xacro" />
   <!--xacro:include filename="$(find elsabot_jeep)/urdf/controllers/skid_steer.urdf.xacro" /-->
 
   <xacro:base 
@@ -68,9 +69,12 @@
     <xacro:insert_block name="depth_sensor_pose" />
   </xacro:depth_sensor>
 
-  <!--xacro:diff_drive_controller
-    wheel_separation="${wheel_pos_y * 2}"
-    wheel_radius="${wheel_radius}"
-    wheel_torque="${wheel_torque}"
-  /-->
-</robot>
+  <xacro:hcsr04_sensor frame_id="hcsr04_back_left">
+    <xacro:insert_block name="range_back_left_pose" />
+  </xacro:hcsr04_sensor>
+
+  <xacro:hcsr04_sensor frame_id="hcsr04_back_right">
+    <xacro:insert_block name="range_back_right_pose" />
+  </xacro:hcsr04_sensor>
+
+  </robot>

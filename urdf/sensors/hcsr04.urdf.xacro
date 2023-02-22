@@ -1,0 +1,25 @@
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:property name="M_PI" value="3.1415926535897931" />
+    <xacro:macro name="hcsr04_sensor" params="*origin frame_id">
+      <link name="${frame_id}">
+        <inertial>
+          <mass value="0.01" />
+          <origin xyz="0.0 0.0 0.040"/>
+          <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
+        </inertial>
+        <collision>
+          <origin xyz="0 0 0" rpy="0 0 0" />
+          <geometry>
+            <box size="0.015 0.040 0.015" />
+          </geometry>
+        </collision>
+      </link>
+
+      <joint name="${frame_id}_joint" type="fixed">
+        <xacro:insert_block name="origin" />
+        <parent link="base_link" />
+        <child link="${frame_id}"/>
+      </joint>
+    </xacro:macro>      
+</robot>
+  

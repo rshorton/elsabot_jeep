@@ -20,4 +20,13 @@
   <xacro:property name="depth_sensor_pose">
     <origin xyz="-0.065 0 0.255" rpy="0 0 0"/>
   </xacro:property>
+
+  <xacro:property name="range_back_left_pose">
+    <origin xyz="-0.543 0.205 0.298" rpy="0 0 -3.14"/>
+  </xacro:property>
+
+  <xacro:property name="range_back_right_pose">
+    <origin xyz="-0.543 -0.205 0.298" rpy="0 0 -3.14"/>
+  </xacro:property>
+
 </robot>
