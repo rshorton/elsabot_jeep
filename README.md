@@ -35,6 +35,7 @@ Other
 * sudo apt install ros-humble-rplidar-ros
 * sudo apt install ros-humble-laser-filters
 * sudo apt install ros-humble-joint-state-publisher
+* sudo apt install ros-humble-rosbridge-suite
 
 Development Machine
 * Installed full ROS Humble install
@@ -53,10 +54,10 @@ teleop Controller
 ## Running
 
 1. Start base functionality using terminal shell 1:
-    + ros2 launch elsabot_jeep bringup.launch.py joy:=true rviz:=false
+    + ros2 launch elsabot_jeep bringup.launch.py
     + Use telop with game controller to control jeep
 2. Start navigation using terminal shell 2:
-    + ros2 launch elsabot_jeep navigation.launch.py rviz:=false
+    + ros2 launch elsabot_jeep navigation.launch.py
 3. Start RVIZ on development host  
     + Use RVIZ to set initial position and then issue nav commands.
   

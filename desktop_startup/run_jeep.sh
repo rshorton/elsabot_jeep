@@ -41,7 +41,4 @@ fi
 
 logger "Starting elsabot jeep"
 source install/setup.bash && ros2 launch elsabot_jeep initial_testing.py joy:=true rviz:=false &
-sleep 10
-logger "Running ros2 web bridge"
-source install/setup.bash && python3 src/elsabot_jeep/elsabot_jeep/ros2_web_bridge_launch.py
 

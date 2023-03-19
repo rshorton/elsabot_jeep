@@ -24,6 +24,7 @@ from launch_ros.substitutions import FindPackageShare
 from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
 from launch.conditions import IfCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch_xml.launch_description_sources import XMLLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration, PythonExpression, PathJoinSubstitution
 
 #MAP_NAME='office'
@@ -44,6 +45,10 @@ def generate_launch_description():
 
     description_launch_path = PathJoinSubstitution(
         [FindPackageShare('elsabot_jeep'), 'launch', 'description.launch.py']
+    )
+
+    rosbridge_launch_path = PathJoinSubstitution(
+        [FindPackageShare('rosbridge_server'), 'launch', 'rosbridge_websocket_launch.xml']
     )
 
     ekf_config_path = PathJoinSubstitution(
@@ -105,7 +110,7 @@ def generate_launch_description():
 
         DeclareLaunchArgument(
             name='joy', 
-            default_value='false',
+            default_value='true',
             description='Use Joystick'
         ),
 
@@ -177,14 +182,11 @@ def generate_launch_description():
             arguments=['-d', rviz_config_path],
             condition=IfCondition(LaunchConfiguration("rviz")),
             parameters=[{'use_sim_time': LaunchConfiguration("use_sim_time")}]
-        )
-        #,
+        ),
 
         # web bridge (for proxying topics/actions to/from ros_web based applications)
-        # ROS2 web bridge - run a bash script to run the nodejs based process
-        #Node(
-            #package='elsabot_jeep',
-            #executable='ros2_web_bridge_launch'
-        #)
+        IncludeLaunchDescription(
+            XMLLaunchDescriptionSource(rosbridge_launch_path)
+        )
     ])
     return ld
