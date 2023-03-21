@@ -6,6 +6,7 @@
   <xacro:include filename="$(find elsabot_jeep)/urdf/mech/wheel.urdf.xacro" />
   <xacro:include filename="$(find elsabot_jeep)/urdf/sensors/imu.urdf.xacro" />
   <xacro:include filename="$(find elsabot_jeep)/urdf/sensors/generic_laser.urdf.xacro" />
+  <xacro:include filename="$(find elsabot_jeep)/urdf/sensors/depthai_macro.urdf.xacro" />
   <!--xacro:include filename="$(find elsabot_jeep)/urdf/sensors/depth_sensor.urdf.xacro" /-->
   <xacro:include filename="$(find elsabot_jeep)/urdf/sensors/oakd_on_ptbase.urdf.xacro" />
   <xacro:include filename="$(find elsabot_jeep)/urdf/sensors/hcsr04.urdf.xacro" />
@@ -77,4 +78,17 @@
     <xacro:insert_block name="range_back_right_pose" />
   </xacro:hcsr04_sensor>
 
+  <xacro:depthai_camera 
+   camera_name = "${depth_camera_name}"
+   parent = "${depth_parent_frame}"
+   camera_model = "${depth_camera_model}"
+   base_frame = "${depth_base_frame}"
+   cam_pos_x = "${depth_cam_pos_x}"
+   cam_pos_y = "${depth_cam_pos_y}"
+   cam_pos_z = "${depth_cam_pos_z}"
+   cam_roll = "${depth_cam_roll}"
+   cam_pitch = "${depth_cam_pitch}"
+   cam_yaw = "${depth_cam_yaw}"
+  />
+  
   </robot>

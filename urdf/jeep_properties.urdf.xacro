@@ -29,4 +29,16 @@
     <origin xyz="-0.543 -0.205 0.298" rpy="0 0 -3.14"/>
   </xacro:property>
 
+  <!-- OakD as depth sensor -->
+  <xacro:property name="depth_camera_name" value="oak" />
+  <xacro:property name="depth_camera_model" value="OAK-D" />
+  <xacro:property name="depth_base_frame" value="front_oakd_base_link" />
+  <xacro:property name="depth_parent_frame" value="base_link" />
+  <xacro:property name="depth_cam_pos_x" value="0.254" />
+  <xacro:property name="depth_cam_pos_y" value="0.0" />
+  <xacro:property name="depth_cam_pos_z" value="0.620" />
+  <xacro:property name="depth_cam_roll" value="0.0" />
+  <xacro:property name="depth_cam_pitch" value="0.42" />
+  <xacro:property name="depth_cam_yaw" value="0.0" />
+
 </robot>
