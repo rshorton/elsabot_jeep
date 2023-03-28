@@ -36,6 +36,8 @@ Other
 * sudo apt install ros-humble-laser-filters
 * sudo apt install ros-humble-joint-state-publisher
 * sudo apt install ros-humble-rosbridge-suite
+* sudo apt install ros-humble-robot-localization
+* sudo apt install ros-humble-joy-linux
 
 Development Machine
 * Installed full ROS Humble install
