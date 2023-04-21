@@ -23,12 +23,11 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.conditions import IfCondition
 from launch_ros.substitutions import FindPackageShare
 from launch_ros.actions import Node
+from nav2_common.launch import RewrittenYaml
+from ament_index_python.packages import get_package_share_directory
 
-MAP_NAME='office_for_jeep'
 MAP_NAME='upstairs'
-#MAP_NAME='office' #change to the name of your own map here
-#MAP_NAME='backyard' #change to the name of your own map here
-#MAP_NAME='downstairs' #change to the name of your own map here
+#MAP_NAME='backyard'
 
 def generate_launch_description():
     nav2_launch_path = PathJoinSubstitution(
@@ -43,15 +42,47 @@ def generate_launch_description():
         [FindPackageShare('elsabot_jeep'), 'maps', f'{MAP_NAME}.yaml']
     )
 
+    default_keep_out_map_path = PathJoinSubstitution(
+        [FindPackageShare('elsabot_jeep'), 'maps', f'{MAP_NAME}_keep_out.yaml']
+    )
+
     nav2_config_path = PathJoinSubstitution(
         [FindPackageShare('elsabot_jeep'), 'config', 'navigation.yaml']
+#        [FindPackageShare('elsabot_jeep'), 'config', 'navigation_depth.yaml']
     )
+
+    nav2_bt_through_poses_xml_path = PathJoinSubstitution(
+        [FindPackageShare('elsabot_jeep'), 'config', 'navigate_through_poses_w_replanning_and_recovery.xml']
+    )
+
+    nav2_bt_to_pose_xml_path = PathJoinSubstitution(
+        [FindPackageShare('elsabot_jeep'), 'config', 'navigate_to_pose_w_replanning_and_recovery.xml']
+    )
+
+    # Create our own temporary YAML files that include substitutions
+    param_substitutions = {
+        'default_nav_through_poses_bt_xml': LaunchConfiguration("default_nav2_bt_through_poses_xml_path"),
+        'default_nav_to_pose_bt_xml': LaunchConfiguration("default_nav2_bt_to_pose_xml_path")}
+
+    # Re-write the nav parameters file to use our modified nav bt xml files.
+    # Those files remove spin recovery since that is not possible on the jeep.
+    rewritten_nav2_params = RewrittenYaml(
+            source_file=nav2_config_path,
+            root_key='',
+            param_rewrites=param_substitutions,
+            convert_types=True)
 
     return LaunchDescription([
         DeclareLaunchArgument(
-            name='sim', 
+            name='use_sim_time', 
             default_value='false',
             description='Enable use_sime_time to true'
+        ),
+
+        DeclareLaunchArgument(
+            'slam',
+            default_value='False',
+            description='Run SLAM to create a map'
         ),
 
         DeclareLaunchArgument(
@@ -60,19 +91,53 @@ def generate_launch_description():
             description='Run rviz'
         ),
 
-       DeclareLaunchArgument(
+        DeclareLaunchArgument(
             name='map', 
             default_value=default_map_path,
             description='Navigation map path'
         ),
 
+        DeclareLaunchArgument(
+            name='keep_out_map', 
+            default_value=default_keep_out_map_path,
+            description='Navigation keep out map path'
+        ),
+
+        DeclareLaunchArgument(
+            'use_keep_out',
+            default_value='True',
+            description='Enable use of keep-out area map'
+        ),
+
+        DeclareLaunchArgument(
+            name='default_nav2_bt_through_poses_xml_path',
+            default_value=nav2_bt_through_poses_xml_path,
+            description='Full path to Nav behavior tree xml file'),
+
+        DeclareLaunchArgument(
+            name='default_nav2_bt_to_pose_xml_path',
+            default_value=nav2_bt_to_pose_xml_path,
+            description='Full path to Nav behavior tree xml file'),
+
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(nav2_launch_path),
             launch_arguments={
+                'use_sim_time': LaunchConfiguration("use_sim_time"),
                 'map': LaunchConfiguration("map"),
-                'use_sim_time': LaunchConfiguration("sim"),
-                'params_file': nav2_config_path
+                'slam': LaunchConfiguration("slam"),
+                'log_level': "info",
+                'params_file': rewritten_nav2_params
             }.items()
+        ),
+
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(
+                os.path.join(get_package_share_directory('elsabot_jeep'), 'launch', 'keep_out_area.launch.py')),
+            condition=IfCondition(LaunchConfiguration("use_keep_out")),
+            launch_arguments={
+                'keep_out_map': LaunchConfiguration("keep_out_map"),
+                'use_sim_time': LaunchConfiguration("use_sim_time"),
+                'autostart': LaunchConfiguration("autostart")}.items()
         ),
 
         Node(

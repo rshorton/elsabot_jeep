@@ -27,9 +27,8 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_xml.launch_description_sources import XMLLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration, PythonExpression, PathJoinSubstitution
 
-#MAP_NAME='office'
+MAP_NAME='upstairs'
 #MAP_NAME='backyard'
-MAP_NAME='downstairs'
 
 def generate_launch_description():
 
@@ -59,17 +58,26 @@ def generate_launch_description():
         [FindPackageShare('elsabot_jeep'), 'rviz', 'navigation.rviz']
     )
 
+    default_map_path = PathJoinSubstitution(
+        [FindPackageShare('elsabot_jeep'), 'maps', f'{MAP_NAME}.yaml']
+    )
+
+    default_keep_out_map_path = PathJoinSubstitution(
+        [FindPackageShare('elsabot_jeep'), 'maps', f'{MAP_NAME}_keep_out.yaml']
+    )
+
     return LaunchDescription([
+
         DeclareLaunchArgument(
-            'map',
-            default_value=os.path.join(elsabot_jeep_dir, 'maps', f'{MAP_NAME}.yaml'),
-            description='Full path to map yaml file to load'
+            name='map',
+            default_value=default_map_path,
+            description='Navigation map path'
         ),
 
         DeclareLaunchArgument(
-            'nav2_params_file',
-            default_value=os.path.join(elsabot_jeep_dir, 'config', 'navigation.yaml'),
-            description='Full path to the ROS2 parameters file to use for all launched nodes'
+            name='keep_out_map',
+            default_value=default_keep_out_map_path,
+            description='Navigation keep out map path'
         ),
 
         DeclareLaunchArgument(
@@ -92,7 +100,7 @@ def generate_launch_description():
 
         DeclareLaunchArgument(
             'use_keep_out',
-            default_value='False',
+            default_value='True',
             description='Enable use of keep-out area map'
         ),
 
@@ -110,7 +118,7 @@ def generate_launch_description():
 
         DeclareLaunchArgument(
             name='joy', 
-            default_value='true',
+            default_value='false',
             description='Use Joystick'
         ),
 
@@ -154,24 +162,14 @@ def generate_launch_description():
 
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
-            os.path.join(get_package_share_directory('nav2_bringup'), 'launch', 'bringup_launch.py')),
+            os.path.join(get_package_share_directory('elsabot_jeep'), 'launch', 'navigation.launch.py')),
             condition=IfCondition(LaunchConfiguration("use_nav")),
             launch_arguments={
                 'use_sim_time': LaunchConfiguration("use_sim_time"),
-                'autostart': LaunchConfiguration("autostart"),
                 'map': LaunchConfiguration("map"),
                 'slam': LaunchConfiguration("slam"),
-                'params_file': LaunchConfiguration("nav2_params_file")}.items()
-        ),
-
-        # Conditionally start the map servers for supporting a map keep-out area
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource(
-                os.path.join(get_package_share_directory('elsabot_jeep'), 'launch', 'keep_out_area.launch.py')),
-            condition=IfCondition(LaunchConfiguration("use_keep_out")),
-            launch_arguments={
-                'use_sim_time': LaunchConfiguration("use_sim_time"),
-                'autostart': LaunchConfiguration("autostart")}.items()
+                'use_keep_out': LaunchConfiguration("use_keep_out"),
+                'keep_out_map': LaunchConfiguration("keep_out_map")}.items()
         ),
 
         Node(

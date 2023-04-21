@@ -11,6 +11,9 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration, PythonExpression
 from nav2_common.launch import RewrittenYaml
 
+#KEEP_OUT='backyard'
+KEEP_OUT='upstairs'
+
 def generate_launch_description():
 
     elsabot_jeep_dir = get_package_share_directory('elsabot_jeep')
@@ -18,7 +21,7 @@ def generate_launch_description():
     use_sim_time = LaunchConfiguration('use_sim_time')
     autostart = LaunchConfiguration('autostart')
     ko_params_file = LaunchConfiguration('keep_out_params_file')
-    ko_mask_yaml_file = LaunchConfiguration('keep_out_mask')
+    ko_mask_yaml_file = LaunchConfiguration('keep_out_map')
 
     declare_use_sim_time_cmd = DeclareLaunchArgument(
         'use_sim_time',
@@ -33,11 +36,11 @@ def generate_launch_description():
     declare_ko_params_file_cmd = DeclareLaunchArgument(
         'keep_out_params_file',
         default_value=os.path.join(elsabot_jeep_dir, 'config', 'keep_out.yaml'),
-        description='Full path to the ROS 2 parameters file to use')
+        description='Full path to the keep out parameters file to use')
 
     declare_ko_mask_yaml_file_cmd = DeclareLaunchArgument(
-        'keep_out_mask',
-        default_value=os.path.join(elsabot_jeep_dir, 'maps', 'map_office_keep_out.yaml'),
+        'keep_out_map',
+        default_value=os.path.join(elsabot_jeep_dir, 'maps', f'{KEEP_OUT}_keep_out.yaml'),
         description='Full path to filter mask yaml file to load')
 
     # Make re-written yaml for keep-out param file to update with map path
