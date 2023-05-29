@@ -26,8 +26,8 @@ from launch_ros.actions import Node
 from nav2_common.launch import RewrittenYaml
 from ament_index_python.packages import get_package_share_directory
 
-MAP_NAME='upstairs'
-#MAP_NAME='backyard'
+#MAP_NAME='upstairs'
+MAP_NAME='backyard'
 
 def generate_launch_description():
     nav2_launch_path = PathJoinSubstitution(
@@ -47,7 +47,8 @@ def generate_launch_description():
     )
 
     nav2_config_path = PathJoinSubstitution(
-        [FindPackageShare('elsabot_jeep'), 'config', 'navigation.yaml']
+        #[FindPackageShare('elsabot_jeep'), 'config', 'navigation.yaml']
+        [FindPackageShare('elsabot_jeep'), 'config', 'navigation_fixed_path_pure_pursuit.yaml']
 #        [FindPackageShare('elsabot_jeep'), 'config', 'navigation_depth.yaml']
     )
 
