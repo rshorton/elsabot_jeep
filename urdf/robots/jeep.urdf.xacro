@@ -4,13 +4,14 @@
   <xacro:include filename="$(find elsabot_jeep)/urdf/jeep_properties.urdf.xacro" />
   <xacro:include filename="$(find elsabot_jeep)/urdf/mech/base.urdf.xacro" />
   <xacro:include filename="$(find elsabot_jeep)/urdf/mech/wheel.urdf.xacro" />
+  <xacro:include filename="$(find elsabot_jeep)/urdf/mech/wheel_steering.urdf.xacro" />
   <xacro:include filename="$(find elsabot_jeep)/urdf/sensors/imu.urdf.xacro" />
   <xacro:include filename="$(find elsabot_jeep)/urdf/sensors/generic_laser.urdf.xacro" />
   <xacro:include filename="$(find elsabot_jeep)/urdf/sensors/depthai_macro.urdf.xacro" />
-  <!--xacro:include filename="$(find elsabot_jeep)/urdf/sensors/depth_sensor.urdf.xacro" /-->
   <xacro:include filename="$(find elsabot_jeep)/urdf/sensors/oakd_on_ptbase.urdf.xacro" />
   <xacro:include filename="$(find elsabot_jeep)/urdf/sensors/hcsr04.urdf.xacro" />
-  <!--xacro:include filename="$(find elsabot_jeep)/urdf/controllers/skid_steer.urdf.xacro" /-->
+  <xacro:include filename="$(find elsabot_jeep)/urdf/controllers/ackermann_drive.urdf.xacro" />
+  <!--xacro:include filename="$(find elsabot_jeep)/urdf/sensors/depth_sensor.urdf.xacro" /-->
 
   <xacro:base 
     length="${base_length}" 
@@ -19,28 +20,32 @@
     mass="${base_mass}"
     wheel_radius="${wheel_radius}"
     wheel_pos_z="${wheel_pos_z}"
-/>
+  />
 
   <xacro:wheel 
+    parent_link="front_left_wheel_steering_link" 
     side="front_left"
     radius="${wheel_radius}" 
     width="${wheel_width}" 
-    pos_x="${wheel_pos_x}" 
-    pos_y="${wheel_pos_y}" 
-    pos_z="${wheel_pos_z}" 
+    pos_x="0" 
+    pos_y="${wheel_center_to_kingpin}" 
+    pos_z="0" 
     mass="${wheel_mass}"
   />
 
   <xacro:wheel 
+    parent_link="front_right_wheel_steering_link" 
     side="front_right"
     radius="${wheel_radius}" 
     width="${wheel_width}" 
-    pos_x="${wheel_pos_x}" 
-    pos_y="${-wheel_pos_y}" 
-    pos_z="${wheel_pos_z}" 
+    pos_x="0" 
+    pos_y="${-wheel_center_to_kingpin}" 
+    pos_z="0" 
     mass="${wheel_mass}"
   />
+  
   <xacro:wheel 
+    parent_link="base_link" 
     side="rear_left"
     radius="${wheel_radius}" 
     width="${wheel_width}" 
@@ -51,6 +56,7 @@
   />
 
   <xacro:wheel 
+    parent_link="base_link" 
     side="rear_right"
     radius="${wheel_radius}" 
     width="${wheel_width}" 
@@ -58,6 +64,26 @@
     pos_y="${-wheel_pos_y}" 
     pos_z="${wheel_pos_z}" 
     mass="${wheel_mass}"
+  />
+
+  <xacro:wheel_steering
+    parent_link="base_link" 
+    side="front_left"
+    pos_x="${wheel_pos_x}" 
+    pos_y="${kingpin_width/2}" 
+    pos_z="${wheel_pos_z}" 
+    mass="${wheel_mass_steering}"
+    max_steer="${wheel_max_steer}"
+  />
+
+  <xacro:wheel_steering
+    parent_link="base_link" 
+    side="front_right"
+    pos_x="${wheel_pos_x}" 
+    pos_y="${-kingpin_width/2}" 
+    pos_z="${wheel_pos_z}" 
+    mass="${wheel_mass_steering}"
+    max_steer="${wheel_max_steer}"
   />
 
   <xacro:imu/>
@@ -89,6 +115,23 @@
    cam_roll = "${depth_cam_roll}"
    cam_pitch = "${depth_cam_pitch}"
    cam_yaw = "${depth_cam_yaw}"
+  />
+  
+  <gazebo>
+    <plugin filename="ignition-gazebo-joint-state-publisher-system" name="ignition::gazebo::systems::JointStatePublisher"/>
+    <plugin filename="ignition-gazebo-sensors-system" name="ignition::gazebo::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+    <plugin filename="ignition-gazebo-imu-system" name="ignition::gazebo::systems::Imu">
+    </plugin>
+  </gazebo>
+
+  <xacro:ackermann_drive_controller
+    wheel_base = "${wheel_base}"
+    wheel_max_steer = "${wheel_max_steer}"
+    wheel_separation = "${2*wheel_pos_y}"
+    kingpin_width = "${kingpin_width}"
+    wheel_radius = "${wheel_radius}"
   />
   
   </robot>

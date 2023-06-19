@@ -80,3 +80,24 @@ Map creation for navigation
 
   * Enable
     + sudo systemctl set-default graphical.target
+
+## Gazeobo Simulation
+
+Steps for running Gazebo and navigation looping test.  Also requires elsabot_bt and
+robot_pose_publisher packages.
+
+```
+export IGN_GAZEBO_RESOURCE_PATH=/home/scott/robot_ws/src
+ros2 launch elsabot_jeep gazebo.launch2.py
+ros2 launch elsabot_jeep navigation.launch.py use_sim_time:=true rviz:=true use_keep_out:=false
+<Use RViz to set the 2D pose estimate.>
+ros2 launch elsabot_bt elsabot_bt_only.launch.py bt_xml:=/home/scott/robot_ws/src/elsabot_bt/bt_xml/bt_nav_loop.xml
+```
+
+Tested with Gazebo Fortress.
+
+Behavior you should see:
+
+* Simple Gazebo world that mirrors the backyard map well enough for localization to work when using a real backyard map for navigation. 
+* The Behavior tree will start the jeep navigating a path around the yard.  It will repeat the number of repeat loops specified in the behavior tree.
+* After looping the specified number of times the behavior tree will exit.

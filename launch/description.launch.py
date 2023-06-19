@@ -79,8 +79,28 @@ def generate_launch_description():
                     'use_sim_time': LaunchConfiguration('use_sim_time'),
                     'robot_description': Command(['xacro ', LaunchConfiguration('urdf')])
                 }
-            ]
+            ],
+            #arguments=[
+            #    '--ros-args', '--log-level', 'debug'
+            #],              
         ),
+
+        Node(
+            package='robot_pose_publisher',
+            executable='robot_pose_publisher',
+            name='robot_pose_publisher',
+            output='screen',
+            parameters=[
+                {
+                    'use_sim_time': LaunchConfiguration('use_sim_time'),
+                    'robot_description': Command(['xacro ', LaunchConfiguration('urdf')])
+                }
+            ],
+            arguments=[
+                '--ros-args', '--log-level', 'warn'
+            ],              
+        ),
+
 
         Node(
             package='rviz2',

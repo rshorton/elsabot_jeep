@@ -15,12 +15,12 @@
         </material>
       </visual>
       
-      <collision>
+      <!--collision>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <box size="${length} ${width} ${height}"/>
         </geometry>
-      </collision>
+      </collision-->
 
       <inertial>
         <origin xyz="0 0 0" rpy="0 0 0"/>

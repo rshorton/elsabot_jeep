@@ -28,6 +28,7 @@ from ament_index_python.packages import get_package_share_directory
 
 #MAP_NAME='upstairs'
 MAP_NAME='backyard'
+#MAP_NAME='gazebo3'
 
 def generate_launch_description():
     nav2_launch_path = PathJoinSubstitution(
@@ -58,6 +59,7 @@ def generate_launch_description():
 
     nav2_bt_to_pose_xml_path = PathJoinSubstitution(
         [FindPackageShare('elsabot_jeep'), 'config', 'navigate_to_pose_w_replanning_and_recovery.xml']
+        #[FindPackageShare('elsabot_jeep'), 'config', 'follow_point.xml']
     )
 
     # Create our own temporary YAML files that include substitutions
@@ -148,6 +150,8 @@ def generate_launch_description():
             output='screen',
             arguments=['-d', rviz_config_path],
             condition=IfCondition(LaunchConfiguration("rviz")),
-            parameters=[{'use_sim_time': LaunchConfiguration("sim")}]
+            # Using use_sim_time=True causes laser scan to never decay
+            parameters=[{'use_sim_time': False}]
+            #parameters=[{'use_sim_time': LaunchConfiguration("use_sim_time")}]
         )
     ])
