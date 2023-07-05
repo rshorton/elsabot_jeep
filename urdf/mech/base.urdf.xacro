@@ -8,7 +8,7 @@
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <!-- box size="${length} ${width} ${height}"/ -->
-          <mesh filename="package://elsabot_jeep/meshes/jeep_simple.stl" scale="1.0 1.0 1.0"/> -->
+          <mesh filename="package://elsabot_jeep/meshes/jeep_simple.stl" scale="1.0 1.0 1.0"/>
         </geometry>
         <material name="gray">
           <color rgba="0.8 0.8 0.8 1.0"/>

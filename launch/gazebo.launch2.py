@@ -50,7 +50,6 @@ def generate_launch_description():
             os.path.join(pkg_ros_gz_sim, 'launch', 'gz_sim.launch.py')),
         launch_arguments={
             #'gz_args': '-r empty.sdf'
-            #'gz_args': '-r my_world4.sdf'
             'gz_args': '-r ' +  os.path.join(get_package_share_directory('elsabot_jeep'), 'gazebo_worlds', 'my_world4.sdf')
         }.items(),
     )
@@ -73,7 +72,6 @@ def generate_launch_description():
                     '-x', '0.0',
                     '-y', '0.0',
                     '-z', '0.3',
-                    #'-z', '-0.02',
                     #'-file', '/home/scott/robot_ws/stock_ackerman.sdf'
                     #'-file', '/home/scott/robot_ws/stock_diff_drive.sdf'
                     '-topic', '/robot_description'
@@ -84,12 +82,12 @@ def generate_launch_description():
     bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
-        arguments=['/cmd_vel@geometry_msgs/msg/Twist@gz.msgs.Twist',
+                    # Normally use /cmd_vel, see elsabot_jeep_sim Node below.
+        arguments=['/cmd_vel_filtered@geometry_msgs/msg/Twist@gz.msgs.Twist',
                    '/odom@nav_msgs/msg/Odometry@gz.msgs.Odometry',
                    '/scan@sensor_msgs/msg/LaserScan@gz.msgs.LaserScan',
                    '/imu/data@sensor_msgs/msg/Imu@gz.msgs.IMU',
                    '/model/elsabot_jeep/tf@tf2_msgs/msg/TFMessage@gz.msgs.Pose_V',
-                   '/acker_dummy_tf@tf2_msgs/msg/TFMessage@gz.msgs.Pose_V',
                    '/world/empty/model/elsabot_jeep/joint_state@sensor_msgs/msg/JointState[gz.msgs.Model',
                    '/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock',
 
@@ -97,7 +95,7 @@ def generate_launch_description():
         parameters=[{'qos_overrides./model/elsabot_jeep.subscriber.reliability': 'reliable'}],
         remappings=[('/world/empty/model/elsabot_jeep/joint_state', 'joint_states'),
                     ('/model/elsabot_jeep/tf', 'tf'),
-                    ('/acker_dummy_tf', 'acker_dummy_tf')
+                    ('/scan', '/scan_filtered')
                    ],
         output='screen'
     )
@@ -117,6 +115,21 @@ def generate_launch_description():
         output='screen',
     )
 
+    # Used to simulate cmd_vel filtering for drive control mode
+    # where the driver enables movement along path when
+    # accel pedal pressed.
+    #  Enable mode: ros2 topic pub /driver_control_mode std_msgs/msg/Int8 data:\ 2\
+    #  Sim pedal press: ros2 topic pub /accel_pedal_pressed std_msgs/msg/Bool data:\ true\ 
+    # Defaults to accel pedal not controlling.
+    # This node publishes to cmd_vel_filtered
+
+    jeep_control_sim = Node(
+        package='elsabot_jeep_sim',
+        executable='elsabot_jeep_sim',
+        name='elsabot_jeep_sim',
+        output='screen'
+    )
+
     return LaunchDescription([
         SetParameter(name='use_sim_time', value=True),
 
@@ -131,5 +144,6 @@ def generate_launch_description():
         bridge,
         description,
         cmd_timeout,
+        jeep_control_sim,
         #rviz
     ])
