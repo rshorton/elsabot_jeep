@@ -1,0 +1,39 @@
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:macro name="ackermann_drive_controller" params="wheel_separation kingpin_width wheel_base wheel_radius wheel_max_steer">
+    <gazebo>
+      <plugin name="ignition::gazebo::systems::AckermannSteering" filename="ignition-gazebo-ackermann-steering-system">
+        <left_joint>rear_left_wheel_joint</left_joint>
+        <right_joint>rear_right_wheel_joint</right_joint>
+
+        <left_joint>front_left_wheel_joint</left_joint>
+        <right_joint>front_right_wheel_joint</right_joint>
+
+        <left_steering_joint>front_left_wheel_steering_joint</left_steering_joint>
+        <right_steering_joint>front_right_wheel_steering_joint</right_steering_joint>
+
+        <steering_limit>${wheel_max_steer}</steering_limit>
+
+        <wheel_base>${wheel_base}</wheel_base>
+        <wheel_separation>${wheel_separation}</wheel_separation>
+        <kingpin_width>${kingpin_width}</kingpin_width>
+
+        <wheel_radius>${wheel_radius}</wheel_radius>
+
+        <!--max_wheel_acceleration>1.0</max_wheel_acceleration-->
+
+        <min_velocity>-1.0</min_velocity>
+        <max_velocity>2.0</max_velocity>
+        <min_acceleration>-1.0</min_acceleration>        
+        <max_acceleration>2.0</max_acceleration>        
+
+        <odom_topic>odom</odom_topic>
+        <odom_publish_frequency>20</odom_publish_frequency>
+        
+        <topic>cmd_vel_filtered</topic>
+        <frame_id>odom</frame_id>
+        <child_frame_id>base_footprint</child_frame_id>
+
+      </plugin>
+    </gazebo>
+  </xacro:macro>
+</robot>

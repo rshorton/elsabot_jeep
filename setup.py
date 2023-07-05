@@ -26,7 +26,6 @@ setup(
     license='TODO: License declaration',
     entry_points={
         'console_scripts': [
-            'ros2_web_bridge_launch = elsabot_jeep.ros2_web_bridge_launch:main',
         ],
     },
 )

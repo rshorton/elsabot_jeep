@@ -69,6 +69,8 @@ def generate_launch_description():
             output='screen',
             arguments=['-d', rviz_config_path],
             condition=IfCondition(LaunchConfiguration("rviz")),
-            parameters=[{'use_sim_time': LaunchConfiguration("sim")}]
+            # Using use_sim_time=True causes laser scan to never decay
+            parameters=[{'use_sim_time': False}]
+            #parameters=[{'use_sim_time': LaunchConfiguration("sim")}]
         )
     ])

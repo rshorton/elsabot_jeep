@@ -37,7 +37,7 @@ amcl:
     z_max: 0.05
     z_rand: 0.5
     z_short: 0.05
-    scan_topic: scan
+    scan_topic: /scan_filtered
 
 amcl_map_client:
   ros__parameters:
@@ -114,8 +114,8 @@ controller_server:
       movement_time_allowance: 10.0
     goal_checker:
       plugin: "nav2_controller::SimpleGoalChecker"
-      xy_goal_tolerance: 0.5
-      yaw_goal_tolerance: 1.0
+      xy_goal_tolerance: 0.2
+      yaw_goal_tolerance: 3.14
       stateful: True
     FollowPath:
       plugin: "nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController"
@@ -166,7 +166,7 @@ local_costmap:
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 10.0
-        inflation_radius: 0.4
+        inflation_radius: 0.2
       range_layer:
         plugin: "nav2_costmap_2d::RangeSensorLayer"
         enabled: True

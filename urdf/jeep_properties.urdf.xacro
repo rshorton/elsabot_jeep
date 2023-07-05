@@ -3,15 +3,21 @@
   <xacro:property name="base_length" value="0.110" />
   <xacro:property name="base_width" value="0.653" />
   <xacro:property name="base_height" value="0.450" />
-  <xacro:property name="base_mass" value="10" />
+  <xacro:property name="base_mass" value="50.0" />
 
+  <xacro:property name="wheel_base" value="0.708" />
   <xacro:property name="wheel_radius" value="0.140" />
   <xacro:property name="wheel_width" value="0.170" />
   <xacro:property name="wheel_pos_x" value="0.354" />
   <xacro:property name="wheel_pos_y" value="0.3265" />
   <xacro:property name="wheel_pos_z" value="0.0" />
-  <xacro:property name="wheel_mass" value=".6" />
+  <xacro:property name="wheel_mass" value="0.2" />
   <xacro:property name="wheel_torque" value="12" />
+  <xacro:property name="wheel_max_steer" value="0.925" />
+  <xacro:property name="wheel_mass_steering" value=".1" />
+  <xacro:property name="kingpin_width" value="0.490" />
+  <xacro:property name="wheel_center_to_kingpin" value="0.082" />
+  
 
   <xacro:property name="laser_pose">
     <origin xyz="0.354 0 0.440" rpy="0 0 3.14"/>
