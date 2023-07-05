@@ -88,7 +88,7 @@ robot_pose_publisher packages.
 
 ```
 export IGN_GAZEBO_RESOURCE_PATH=/home/scott/robot_ws/src
-ros2 launch elsabot_jeep gazebo.launch2.py
+ros2 launch elsabot_jeep gazebo.launch.py
 ros2 launch elsabot_jeep navigation.launch.py use_sim_time:=true rviz:=true use_keep_out:=false
 <Use RViz to set the 2D pose estimate.>
 ros2 launch elsabot_bt elsabot_bt_only.launch.py bt_xml:=/home/scott/robot_ws/src/elsabot_bt/bt_xml/bt_nav_loop.xml
