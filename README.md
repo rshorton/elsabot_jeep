@@ -11,7 +11,7 @@ The firmware for the base microcontroller is based on the linorobot2_hardware pr
 
 **Hardware**: See the above jeep link for a full list
 
-**Computer**: Raspberry Pi4 (8G)
+**Computer**: Raspberry Pi4 (8GB)
 
 ### Packages needed for this install
 
@@ -83,7 +83,7 @@ Map creation for navigation
   * Enable
     + sudo systemctl set-default graphical.target
 
-## Gazeobo Simulation
+## Gazebo Simulation
 
 Steps for running Gazebo and navigation looping test.  Also requires elsabot_bt and
 robot_pose_publisher packages.
@@ -103,3 +103,6 @@ Behavior you should see:
 * Simple Gazebo world that mirrors the backyard map well enough for localization to work when using a real backyard map for navigation. 
 * The Behavior tree will start the jeep navigating a path around the yard.  It will repeat the number of repeat loops specified in the behavior tree.
 * After looping the specified number of times the behavior tree will exit.
+
+Real-world demo (the hardware mounted on the back of the jeep not used for this demo, only the RPi4): 
+https://www.youtube.com/watch?v=f-G0z6sHZ58
