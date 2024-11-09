@@ -12,7 +12,7 @@
   <exec_depend>joy_linux</exec_depend>
   <exec_depend>teleop_twist_joy</exec_depend>
   <exec_depend>teleop_twist_keyboard</exec_depend>
-  <exec_depend>micro_ros_agent</exec_depend>
+  <!--exec_depend>micro_ros_agent</exec_depend-->
 
   <export>
     <build_type>ament_cmake</build_type>
