@@ -13,7 +13,7 @@
   <xacro:property name="wheel_pos_z" value="0.0" />
   <xacro:property name="wheel_mass" value="0.2" />
   <xacro:property name="wheel_torque" value="12" />
-  <xacro:property name="wheel_max_steer" value="0.925" />
+  <xacro:property name="wheel_max_steer" value="0.435" />
   <xacro:property name="wheel_mass_steering" value=".1" />
   <xacro:property name="kingpin_width" value="0.490" />
   <xacro:property name="wheel_center_to_kingpin" value="0.082" />

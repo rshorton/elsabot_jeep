@@ -1,7 +1,7 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
   <xacro:macro name="diff_drive_controller" params="wheel_separation wheel_radius wheel_torque">
     <gazebo>
-      <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+      <plugin name="differential_drive_controller" filename="gz-sim-ros-diff-drive">
         <ros>
           <argument>odom:=odom/unfiltered</argument>
         </ros>

@@ -1,7 +1,7 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
   <xacro:macro name="omni_drive_controller">
     <gazebo>
-    <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
+    <plugin name="object_controller" filename="gz-sim-ros-planar-move">
       <ros>
         <argument>odom:=odom/unfiltered</argument>
       </ros>
