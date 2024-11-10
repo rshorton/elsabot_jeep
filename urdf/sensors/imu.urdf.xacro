@@ -21,7 +21,7 @@
       <sensor name="imu_link" type="imu">
         <topic>imu/data</topic>
         <frameName>imu_link</frameName>
-        <ignition_frame_id>imu_link</ignition_frame_id>
+        <gz_frame_id>imu_link</gz_frame_id>
         <always_on>1</always_on>
       <update_rate>20</update_rate>
       <visualize>true</visualize>

@@ -122,6 +122,8 @@ def generate_launch_description():
             default_value=nav2_bt_to_pose_xml_path,
             description='Full path to Nav behavior tree xml file'),
 
+        #SetParameter(name='use_sim_time', value=LaunchConfiguration("use_sim_time")),
+
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(nav2_launch_path),
             launch_arguments={

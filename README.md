@@ -1,5 +1,8 @@
 # Elsabot Jeep Robot
 
+
+FIX - not updated for Jazzy support
+
 Top-level bring up scripts for the Jeep base version of the Elsabot robot.  
 
 Some parts of these scripts and configuration files are from the Linorobot2 project:  https://github.com/linorobot/linorobot2
@@ -89,11 +92,11 @@ Steps for running Gazebo and navigation looping test.  Also requires elsabot_bt 
 robot_pose_publisher packages.
 
 ```
-export IGN_GAZEBO_RESOURCE_PATH=/home/scott/robot_ws/src
+export GZ_SIM_RESOURCE_PATH=/home/scott/robot_ws/src
 ros2 launch elsabot_jeep gazebo.launch.py
 ros2 launch elsabot_jeep navigation.launch.py use_sim_time:=true rviz:=true use_keep_out:=false
 <Use RViz to set the 2D pose estimate.>
-ros2 launch elsabot_bt elsabot_bt_only.launch.py bt_xml:=/home/scott/robot_ws/src/elsabot_bt/bt_xml/bt_nav_loop.xml
+ros2 launch elsabot_bt elsabot_bt.launch.py bt_xml:=/home/scott/robot_ws/src/elsabot_bt/bt_xml/bt_nav_loop.xml only_bt:=True
 ```
 
 Tested with Gazebo Fortress.

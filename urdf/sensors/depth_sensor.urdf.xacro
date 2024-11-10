@@ -66,7 +66,7 @@
             <format>R8G8B8</format>
           </image>
         </camera>
-        <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+        <plugin name="camera_controller" filename="gz-sim-ros-camera">
           <ros>
             <remapping>/camera/camera_info:=/camera/color/camera_info</remapping>
             <remapping>/camera/image_raw:=/camera/color/image_raw</remapping>
